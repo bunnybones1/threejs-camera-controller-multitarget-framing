@@ -17,7 +17,6 @@ function MultitargetFramer(camera, targetPoints, domSize) {
 	this._offset = new THREE.Vector2(), 
 	this._topLeft = new THREE.Vector2(), 
 	this._size = new THREE.Vector2(),
-	this._projector = new THREE.Projector(),
 	this._screenspaceBounds = new THREE.Box2(),
 	this._screenspaceTargetPoint = new THREE.Vector3(),
 	this._screenspaceSize,
@@ -36,7 +35,7 @@ MultitargetFramer.prototype = {
 		this._screenspaceBounds.makeEmpty();
 		for (var i = this.targetPointsTotal - 1; i >= 0; i--) {
 			this._screenspaceTargetPoint.copy(this.targetPoints[i]);
-			this._projector.projectVector( this._screenspaceTargetPoint, this.camera );
+			this._screenspaceTargetPoint.project( this.camera );
 			this._screenspaceBounds.expandByPoint(this._screenspaceTargetPoint);
 		}
 		this._screenspaceBounds.expandByVector(this.frameMargin);
