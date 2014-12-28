@@ -44,7 +44,7 @@ MultitargetFramer.prototype = {
 		this._offset.x += this._screenspaceOffset.x * this._fullFrame.x * .5 * this.reframeOffsetSpeed;
 		this._offset.y -= this._screenspaceOffset.y * this._fullFrame.y * .5 * this.reframeOffsetSpeed;
 		this._zoom -= (this._zoom - this._zoom * (this._screenspaceSize.x > this._screenspaceSize.y ? this._screenspaceSize.x : this._screenspaceSize.y) * .5) * this.reframeZoomSpeed;
-		this._zoom = Math.max(.1, Math.min(2, this._zoom));
+		this._zoom = Math.max(.1, Math.min(5, this._zoom));
 		this._offset.x = Math.max(-1000, Math.min(1000, this._offset.x));
 		this._offset.y = Math.max(-1000, Math.min(1000, this._offset.y));
 
