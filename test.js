@@ -43,7 +43,9 @@ var onReady = function() {
 			Math.cos(time * 1.33) * camSwayDistance,
 			Math.sin(time * 3) * camSwayDistance + camSwayDistance
 		)
-		framingController.update();
+		var deltaScore = framingController.update();
+		//this metric helps you decide whether things have changed or not. helps in deciding whether its worth a rerender or not.
+		console.log(deltaScore);
 	})
 }
 
