@@ -1,7 +1,10 @@
 function MultitargetFramer(camera, targetPoints, domSize) {
 	var camera = camera;
 	var targetPoints = targetPoints;
-	var domSize = domSize;
+	var frameSize = {
+		x: domSize.x,
+		y: domSize.y
+	};
 
 	var targetAverage = new THREE.Vector3();
 	var targetPointsTotal = targetPoints.length;
@@ -52,7 +55,7 @@ function MultitargetFramer(camera, targetPoints, domSize) {
 		_offset.x = Math.max(-1000, Math.min(1000, _offset.x));
 		_offset.y = Math.max(-1000, Math.min(1000, _offset.y));
 
-		_fullFrame.copy(domSize);
+		_fullFrame.copy(frameSize);
 		_halfFrame.copy(_fullFrame).multiplyScalar(.5);
 		_topLeft.copy(_halfFrame).multiplyScalar(1-_zoom).add(_offset);
 		_size.copy(_fullFrame).multiplyScalar(_zoom);
@@ -71,7 +74,12 @@ function MultitargetFramer(camera, targetPoints, domSize) {
 		);
 		return evalulation
 	}
+	function updateSize(w, h){
+		frameSize.x = w;
+		frameSize.y = h;
+	}
 	this.update = update;
+	this.updateSize = updateSize;
 }
 
 module.exports = MultitargetFramer;
