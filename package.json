@@ -1,6 +1,6 @@
 {
   "name": "threejs-camera-controller-multitarget-framing",
-  "version": "2.1.1",
+  "version": "2.2.0",
   "description": "A camera controller for web-browser friendly FPS controls using a keyboard and mouse.",
   "main": "index.js",
   "license": "MIT",
