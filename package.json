@@ -9,14 +9,15 @@
     "email": "oz@bunnybones.com",
     "url": "https://github.com/bunnybones1"
   },
-  "dependencies": {},
+  "dependencies": {
+  },
   "devDependencies": {
-    "loadandrunscripts": "^1.0.0",
     "game-keyboard": "0.0.0",
     "input-mousewheel": "^1.0.0",
+    "loadandrunscripts": "^1.0.0",
     "lodash": "^2.4.1",
     "pointer-trap-relative": "^1.1.3",
-    "threejs-managed-view": "^2.4.0"
+    "threejs-managed-view": "^4.0.1"
   },
   "scripts": {
     "test": "beefy test.js --live --open"

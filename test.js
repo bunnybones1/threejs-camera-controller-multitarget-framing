@@ -4,7 +4,9 @@ var onReady = function() {
 	var view = new View({
 		useRafPolyfill: false
 	});
+	view.renderManager.skipFrames = 5;
 	var scene = view.scene;
+	view.renderer.setClearColor(0xafffaf);
 
 	var sphereGeometry = new THREE.SphereGeometry(1.5);
 	var size = 500;
@@ -33,7 +35,16 @@ var onReady = function() {
 	var targetBoxMesh = new THREE.Mesh(targetBoxGeometry);
 	var targetPoints = targetBoxGeometry.vertices;
 	scene.add(targetBoxMesh);
-	var framingController = new MultitargetFramer(camera, targetPoints, view.domSize, margin);
+	var framingController = new MultitargetFramer(
+		camera, 
+		targetPoints,
+		view.domSize
+	);
+
+
+	view.onResizeSignal.add(framingController.setSize);
+	var size = view.getSize();
+	framingController.setSize(size.width, size.height);
 
 	var camSwayDistance = 100;
 	view.renderManager.onEnterFrame.add(function() {
@@ -45,7 +56,7 @@ var onReady = function() {
 		)
 		var deltaScore = framingController.update();
 		//this metric helps you decide whether things have changed or not. helps in deciding whether its worth a rerender or not.
-		console.log(deltaScore);
+		// console.log(deltaScore);
 	})
 }
 
