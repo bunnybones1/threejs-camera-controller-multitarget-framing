@@ -1,6 +1,6 @@
 {
   "name": "threejs-camera-controller-multitarget-framing",
-  "version": "2.2.0",
+  "version": "2.2.1",
   "description": "A camera controller for web-browser friendly FPS controls using a keyboard and mouse.",
   "main": "index.js",
   "license": "MIT",
@@ -9,8 +9,7 @@
     "email": "oz@bunnybones.com",
     "url": "https://github.com/bunnybones1"
   },
-  "dependencies": {
-  },
+  "dependencies": {},
   "devDependencies": {
     "game-keyboard": "0.0.0",
     "input-mousewheel": "^1.0.0",
