@@ -31,7 +31,7 @@ var onReady = function() {
 	var camera = view.camera;
 	var margin = 1;
 
-	var targetBoxGeometry = new THREE.BoxGeometry(30, 6, 6, 1, 1, 1);
+	var targetBoxGeometry = new THREE.BoxGeometry(40, 2, 30, 1, 1, 1);
 	var targetBoxMesh = new THREE.Mesh(targetBoxGeometry);
 	var targetPoints = targetBoxGeometry.vertices;
 	scene.add(targetBoxMesh);
@@ -46,6 +46,7 @@ var onReady = function() {
 	view.onResizeSignal.add(framingController.updateSize);
 	var size = view.getSize();
 	framingController.updateSize(size.width, size.height);
+	framingController.frameMargin.set(0, 0);
 
 	var camSwayDistance = 100;
 	view.renderManager.onEnterFrame.add(function() {

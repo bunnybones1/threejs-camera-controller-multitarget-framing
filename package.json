@@ -11,6 +11,7 @@
   },
   "dependencies": {},
   "devDependencies": {
+    "canvas-valueovertimegraph": "^1.0.0",
     "game-keyboard": "0.0.0",
     "input-mousewheel": "^1.0.0",
     "loadandrunscripts": "^1.0.0",
