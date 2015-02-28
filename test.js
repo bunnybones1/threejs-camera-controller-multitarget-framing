@@ -41,22 +41,23 @@ var onReady = function() {
 		view.domSize
 	);
 
+	// framingController.setState(true);
 
-	view.onResizeSignal.add(framingController.setSize);
+	view.onResizeSignal.add(framingController.updateSize);
 	var size = view.getSize();
-	framingController.setSize(size.width, size.height);
+	framingController.updateSize(size.width, size.height);
 
 	var camSwayDistance = 100;
 	view.renderManager.onEnterFrame.add(function() {
-		var time = (new Date()).getTime() * .001 * .25;
+		var time = (new Date()).getTime() * .01 * .25;
 		camera.position.set(
 			Math.sin(time) * camSwayDistance,
-			Math.cos(time * 1.33) * camSwayDistance,
-			Math.sin(time * 3) * camSwayDistance + camSwayDistance
+			Math.cos(time * .3) * camSwayDistance,
+			Math.sin(time * .1) * camSwayDistance + camSwayDistance * .2
 		)
 		var deltaScore = framingController.update();
 		//this metric helps you decide whether things have changed or not. helps in deciding whether its worth a rerender or not.
-		// console.log(deltaScore);
+		console.log(deltaScore);
 	})
 }
 
