@@ -62,7 +62,7 @@ function MultitargetFramer(camera, targetPoints, domSize, mode) {
 		_screenspaceSize.multiply(frameMargin);
 		_screenspaceBounds.min.sub(_screenspaceSize);
 		_screenspaceBounds.max.add(_screenspaceSize);
-		switch(mode) {
+		switch(_mode) {
 			case modes.CROP_TO_FIT:
 				if(1 > aspect) {
 					_screenspaceBounds.min.y /= aspect;
