@@ -7,13 +7,15 @@
 // 	b:0,
 // 	c:0,
 // 	d:0,
-// 	e:0
+// 	e:0,
+// 	f:0
 // }
 // graph.addValue(temp, 'a', '#ff7f7f', 'a', -2, 2);
 // graph.addValue(temp, 'b', '#ff7f7f', 'b', -2, 2);
 // graph.addValue(temp, 'c', '#7fff7f', 'c', -2, 2);
 // graph.addValue(temp, 'd', '#7fff7f', 'd', -2, 2);
 // graph.addValue(temp, 'e', '#7f7fff', 'e', -2, 2);
+// graph.addValue(temp, 'f', '#7f7fff', 'f', -2, 2);
 
 
 var modes = {
@@ -114,14 +116,16 @@ function MultitargetFramer(camera, targetPoints, domSize, mode) {
 		// temp.c = _screenspaceBounds.min.y;
 		// temp.d = _screenspaceBounds.max.y;
 		_screenspaceSize = _screenspaceBounds.size();
+		var deltaY = (_screenspaceBounds.max.y * -.5 + .5);
 		camera.setViewOffset(
 			1, 
 			1, 
-			camera.x + (_screenspaceBounds.min.x * .5 + .5) * camera.width * _strength,
-			camera.y - (_screenspaceBounds.min.y * .5 + .5) * camera.height * _strength,
-			camera.width * ((_screenspaceSize.x * .5) * _strength + (1-_strength)),
-			camera.height * ((_screenspaceSize.y * .5) * _strength + (1-_strength))
+			camera.x + (_screenspaceBounds.min.x * .5 + .5) * camera.width,
+			camera.y + deltaY * camera.height,
+			camera.width * (_screenspaceSize.x * .5),
+			camera.height * (_screenspaceSize.y * .5)
 		);
+		// temp.f = deltaY;
 		evalulation = (
 			Math.abs(camera.x - _oldX) + 
 			Math.abs(camera.y - _oldY) + 

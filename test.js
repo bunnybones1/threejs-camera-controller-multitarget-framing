@@ -4,7 +4,7 @@ var onReady = function() {
 	var view = new View({
 		useRafPolyfill: false
 	});
-	view.renderManager.skipFrames = 5;
+	view.renderManager.skipFrames = 10;
 	var scene = view.scene;
 	view.renderer.setClearColor(0xafffaf);
 
@@ -58,7 +58,7 @@ var onReady = function() {
 		)
 		var deltaScore = framingController.update();
 		//this metric helps you decide whether things have changed or not. helps in deciding whether its worth a rerender or not.
-		console.log(deltaScore);
+		// console.log(deltaScore);
 	})
 }
 
