@@ -38,7 +38,7 @@ function MultitargetFramer(camera, targetPoints, domSize, mode) {
 	var targetAverage = new THREE.Vector3();
 	var targetPointsTotal = targetPoints.length;
 
-	var frameMargin = this.frameMargin = new THREE.Vector2(.25, .25);
+	var frameMargin = this.frameMargin = new THREE.Vector2(.05, .05);
 
 	var _screenspaceBounds = new THREE.Box2();
 	var _screenspaceTargetPoint = new THREE.Vector3();

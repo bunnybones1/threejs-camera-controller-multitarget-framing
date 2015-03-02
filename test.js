@@ -34,6 +34,21 @@ var onReady = function() {
 	var targetBoxGeometry = new THREE.BoxGeometry(40, 2, 30, 1, 1, 1);
 	var targetBoxMesh = new THREE.Mesh(targetBoxGeometry);
 	var targetPoints = targetBoxGeometry.vertices;
+	var helperGeometry = new THREE.SphereGeometry(1, 32, 16);
+	var helperMaterial = new THREE.MeshBasicMaterial({
+		color: 0x2f2f00,
+		transparent: true,
+		depthTest: false,
+		blending: THREE.AdditiveBlending
+	});
+	targetPoints.forEach(function(vertex){
+		vertex.r = .1;
+		var scale = vertex.r * 10;
+		var helper = new THREE.Mesh(helperGeometry, helperMaterial);
+		helper.scale.set(scale, scale, scale);
+		helper.position.copy(vertex);
+		scene.add(helper);
+	});
 	scene.add(targetBoxMesh);
 	var framingController = new MultitargetFramer(
 		camera, 
@@ -46,15 +61,15 @@ var onReady = function() {
 	view.onResizeSignal.add(framingController.updateSize);
 	var size = view.getSize();
 	framingController.updateSize(size.width, size.height);
-	framingController.frameMargin.set(0, 0);
+	framingController.frameMargin.set(.1, .1);
 
-	var camSwayDistance = 100;
+	var camSwayDistance = 60;
 	view.renderManager.onEnterFrame.add(function() {
-		var time = (new Date()).getTime() * .01 * .25;
+		var time = (new Date()).getTime() * .001 * .25;
 		camera.position.set(
 			Math.sin(time) * camSwayDistance,
-			Math.cos(time * .3) * camSwayDistance,
-			Math.sin(time * .1) * camSwayDistance + camSwayDistance * .2
+			Math.cos(time * .13) * camSwayDistance * .25,
+			Math.cos(time) * camSwayDistance
 		)
 		var deltaScore = framingController.update();
 		//this metric helps you decide whether things have changed or not. helps in deciding whether its worth a rerender or not.
