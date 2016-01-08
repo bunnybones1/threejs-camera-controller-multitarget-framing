@@ -24,9 +24,11 @@ var modes = {
 }
 
 function MultitargetFramer(camera, targetPoints, domSize, mode) {
-	var camera = camera;
 	camera.setViewOffset(1, 1, 0, 0, 1, 1);
-	var targetPoints = targetPoints;
+
+	targetPoints.forEach(function(targetPoint) {
+		targetPoint.priority = targetPoint.priority === undefined ? 1 : targetPoint.priority;
+	})
 	var frameSize = {
 		x: domSize.x,
 		y: domSize.y
@@ -47,17 +49,23 @@ function MultitargetFramer(camera, targetPoints, domSize, mode) {
 
 	var _oldX, _oldY, _oldWidth, _oldHeight;
 	var evalulation;
-	var _strength = .2;
+	var _strength = 0.2;
+	var temp = new THREE.Vector3();
+	var i;
 	function update() {
 		_oldX = camera.x;
 		_oldY = camera.y;
 		_oldWidth = camera.width;
 		_oldHeight = camera.height;
 		targetAverage.set(0, 0, 0);
-		for (var i = targetPointsTotal - 1; i >= 0; i--) {
-			targetAverage.add(targetPoints[i]);
-		};
-		targetAverage.multiplyScalar(1 / targetPointsTotal);
+		var totalPriorities = 0;
+		for (i = targetPointsTotal - 1; i >= 0; i--) {
+			temp.copy(targetPoints[i]);
+			temp.multiplyScalar(targetPoints[i].priority);
+			totalPriorities += targetPoints[i].priority;
+			targetAverage.add(temp);
+		}
+		targetAverage.multiplyScalar(1 / totalPriorities);
 		// camera.updateMatrix();
 		// camera.updateMatrixWorld();
 		camera.lookAt(targetAverage);
@@ -66,7 +74,7 @@ function MultitargetFramer(camera, targetPoints, domSize, mode) {
 		// camera.updateProjectionMatrix();
 
 		_screenspaceBounds.makeEmpty();
-		for (var i = targetPointsTotal - 1; i >= 0; i--) {
+		for (i = targetPointsTotal - 1; i >= 0; i--) {
 			_screenspaceTargetPoint.copy(targetPoints[i]);
 			_screenspaceTargetPoint.project( camera );
 			_screenspaceBounds.expandByPoint(_screenspaceTargetPoint);
@@ -86,11 +94,11 @@ function MultitargetFramer(camera, targetPoints, domSize, mode) {
 		// temp.e = _screenspaceOffset.y;
 		_screenspaceBounds.min.sub(_screenspaceOffset);
 		_screenspaceBounds.max.sub(_screenspaceOffset);
-		
+
 		_screenspaceSize.multiply(frameMargin);
 		_screenspaceBounds.min.sub(_screenspaceSize);
 		_screenspaceBounds.max.add(_screenspaceSize);
-		
+
 		switch(_mode) {
 			case modes.CROP_TO_FIT:
 				if(1 > aspect) {
@@ -116,19 +124,19 @@ function MultitargetFramer(camera, targetPoints, domSize, mode) {
 		// temp.c = _screenspaceBounds.min.y;
 		// temp.d = _screenspaceBounds.max.y;
 		_screenspaceSize = _screenspaceBounds.size();
-		var deltaY = (_screenspaceBounds.max.y * -.5 + .5);
+		var deltaY = (_screenspaceBounds.max.y * -0.5 + 0.5);
 		camera.setViewOffset(
-			1, 
-			1, 
-			camera.x + (_screenspaceBounds.min.x * .5 + .5) * camera.width,
+			1,
+			1,
+			camera.x + (_screenspaceBounds.min.x * 0.5 + 0.5) * camera.width,
 			camera.y + deltaY * camera.height,
-			camera.width * (_screenspaceSize.x * .5),
-			camera.height * (_screenspaceSize.y * .5)
+			camera.width * (_screenspaceSize.x * 0.5),
+			camera.height * (_screenspaceSize.y * 0.5)
 		);
 		// temp.f = deltaY;
 		evalulation = (
-			Math.abs(camera.x - _oldX) + 
-			Math.abs(camera.y - _oldY) + 
+			Math.abs(camera.x - _oldX) +
+			Math.abs(camera.y - _oldY) +
 			Math.abs(camera.width - _oldWidth) * 100 +
 			Math.abs(camera.height - _oldHeight) * 100
 		);
